@@ -1,6 +1,6 @@
 ---
-title: My Document
-author: Deden Istiawan-Institut Teknologi Statistika dan Bisnis Muhammadiyah
+title: 'Algoritma KNN'
+author: Nurul Khamidah-Institut Teknologi Statistika dan Bisnis Muhammadiyah
 date: "`r Sys.Date()`"
 output:
   prettydoc::html_pretty:
@@ -19,24 +19,32 @@ text-align: justify}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# R Markdown
+# Algoritma KNN
+K-Nearest Neighbors atau KNN adalah algoritma yang berfungsi untuk melakukan klasifikasi suatu data berdasarkan data pembelajaran (train data sets), yang diambil dari k tetangga terdekatnya (nearest neighbors). Dengan K merupakan banyaknya tetangga terdekat.
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents [@deCarvalho2012]. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+# Tahapan Algoritma KNN
+tahapan algoritma 1. Menyiapkan Dataset
+2. Menentukan Nilai K
+3. Menghitung jarak antara data Trining dan data Testing ( Euclidean Distance )
+4. Mengurutkan data berdasarkan jarak terkecil ( Rank )
+5. Mengelompokkan data
 
-```{r cars}
-summary(cars)
-```
+# Eksperimen Algoritma KNN
+## library
+```{r}
+library(class)
+x1<-c(7,7,3,2)
+x2<-c(6,4,4,4)
 
-## Including Plots
+benang<-cbind(x1,x2)
+benang
 
-You can also embed plots, for example:
+opini<-factor(c("bagus","bagus","jelek","jelek"))
+opini
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+bbaru<-cbind(3,6)
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+hasil<-knn(benang,bbaru,opini,k=3)
 
-# Referensi
+hasil
