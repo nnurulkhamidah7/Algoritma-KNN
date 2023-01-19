@@ -33,18 +33,76 @@ tahapan algoritma 1. Menyiapkan Dataset
 # Eksperimen Algoritma KNN
 ## library
 ```{r}
-library(class)
-x1<-c(7,7,3,2)
-x2<-c(6,4,4,4)
+library(nnet)
+data(iris)
+head(iris)
+```
 
-benang<-cbind(x1,x2)
-benang
+```{r}
+data(iris3)
+iris3
+```
 
-opini<-factor(c("bagus","bagus","jelek","jelek"))
-opini
+```{r}
+head(iris3[,,1])
+```
 
-bbaru<-cbind(3,6)
+```{r}
+ir <- rbind(iris3[,,1],iris3[,,2],iris3[,,3])
+head(ir)
+```
 
-hasil<-knn(benang,bbaru,opini,k=3)
+```{r}
+tail(ir)
+```
 
-hasil
+```{r}
+targets <- class.ind( c(rep("s", 50), rep("c", 50), rep("v", 50)) )
+```
+
+```{r}
+head(targets)
+```
+
+```{r}
+tail(targets)
+```
+
+```{r}
+samp <- c(sample(1:50,25), sample(51:100,25), sample(101:150,25))
+```
+
+```{r}
+sample(1:50,25)
+```
+
+```{r}
+ir1 <- nnet(ir[samp,], targets[samp,], size = 2, rang = 0.1,
+            decay = 5e-4, maxit = 200)
+```
+
+```{r}
+ir1 
+
+```
+
+```{r}
+str(ir1)
+```
+
+```{r}
+test.cl <- function(true, pred) {
+    true <- max.col(true)
+    cres <- max.col(pred)
+    table(true, cres)
+}
+```
+
+```{r}
+test.cl(targets[-samp,], predict(ir1, ir[-samp,]))
+```
+
+
+
+#referensi
+https://rpubs.com/fajriyahakim/322155

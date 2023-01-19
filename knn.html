@@ -12,7 +12,7 @@
 
 <meta name="author" content="Nurul Khamidah-Institut Teknologi Statistika dan Bisnis Muhammadiyah" />
 
-<meta name="date" content="2022-12-29" />
+<meta name="date" content="2023-01-19" />
 
 <title>Algoritma KNN</title>
 
@@ -152,7 +152,7 @@ code span.ot { color: #007020; }
 <h1 class="title toc-ignore">Algoritma KNN</h1>
 <h3 class="author">Nurul Khamidah-Institut Teknologi Statistika dan
 Bisnis Muhammadiyah</h3>
-<h3 class="date">2022-12-29</h3>
+<h3 class="date">2023-01-19</h3>
 </div>
 </header>
 
@@ -183,28 +183,287 @@ Mengelompokkan data</p>
 <h1>Eksperimen Algoritma KNN</h1>
 <div id="library" class="section level2">
 <h2>library</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(class)</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x1<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">7</span>,<span class="dv">7</span>,<span class="dv">3</span>,<span class="dv">2</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>x2<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">6</span>,<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">4</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>benang<span class="ot">&lt;-</span><span class="fu">cbind</span>(x1,x2)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>benang</span></code></pre></div>
-<pre><code>##      x1 x2
-## [1,]  7  6
-## [2,]  7  4
-## [3,]  3  4
-## [4,]  2  4</code></pre>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>opini<span class="ot">&lt;-</span><span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">&quot;bagus&quot;</span>,<span class="st">&quot;bagus&quot;</span>,<span class="st">&quot;jelek&quot;</span>,<span class="st">&quot;jelek&quot;</span>))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>opini</span></code></pre></div>
-<pre><code>## [1] bagus bagus jelek jelek
-## Levels: bagus jelek</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>bbaru<span class="ot">&lt;-</span><span class="fu">cbind</span>(<span class="dv">3</span>,<span class="dv">6</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>hasil<span class="ot">&lt;-</span><span class="fu">knn</span>(benang,bbaru,opini,<span class="at">k=</span><span class="dv">3</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>hasil</span></code></pre></div>
-<pre><code>## [1] jelek
-## Levels: bagus jelek</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nnet)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris)</span></code></pre></div>
+<pre><code>##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(iris3)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>iris3</span></code></pre></div>
+<pre><code>## , , Setosa
+## 
+##       Sepal L. Sepal W. Petal L. Petal W.
+##  [1,]      5.1      3.5      1.4      0.2
+##  [2,]      4.9      3.0      1.4      0.2
+##  [3,]      4.7      3.2      1.3      0.2
+##  [4,]      4.6      3.1      1.5      0.2
+##  [5,]      5.0      3.6      1.4      0.2
+##  [6,]      5.4      3.9      1.7      0.4
+##  [7,]      4.6      3.4      1.4      0.3
+##  [8,]      5.0      3.4      1.5      0.2
+##  [9,]      4.4      2.9      1.4      0.2
+## [10,]      4.9      3.1      1.5      0.1
+## [11,]      5.4      3.7      1.5      0.2
+## [12,]      4.8      3.4      1.6      0.2
+## [13,]      4.8      3.0      1.4      0.1
+## [14,]      4.3      3.0      1.1      0.1
+## [15,]      5.8      4.0      1.2      0.2
+## [16,]      5.7      4.4      1.5      0.4
+## [17,]      5.4      3.9      1.3      0.4
+## [18,]      5.1      3.5      1.4      0.3
+## [19,]      5.7      3.8      1.7      0.3
+## [20,]      5.1      3.8      1.5      0.3
+## [21,]      5.4      3.4      1.7      0.2
+## [22,]      5.1      3.7      1.5      0.4
+## [23,]      4.6      3.6      1.0      0.2
+## [24,]      5.1      3.3      1.7      0.5
+## [25,]      4.8      3.4      1.9      0.2
+## [26,]      5.0      3.0      1.6      0.2
+## [27,]      5.0      3.4      1.6      0.4
+## [28,]      5.2      3.5      1.5      0.2
+## [29,]      5.2      3.4      1.4      0.2
+## [30,]      4.7      3.2      1.6      0.2
+## [31,]      4.8      3.1      1.6      0.2
+## [32,]      5.4      3.4      1.5      0.4
+## [33,]      5.2      4.1      1.5      0.1
+## [34,]      5.5      4.2      1.4      0.2
+## [35,]      4.9      3.1      1.5      0.2
+## [36,]      5.0      3.2      1.2      0.2
+## [37,]      5.5      3.5      1.3      0.2
+## [38,]      4.9      3.6      1.4      0.1
+## [39,]      4.4      3.0      1.3      0.2
+## [40,]      5.1      3.4      1.5      0.2
+## [41,]      5.0      3.5      1.3      0.3
+## [42,]      4.5      2.3      1.3      0.3
+## [43,]      4.4      3.2      1.3      0.2
+## [44,]      5.0      3.5      1.6      0.6
+## [45,]      5.1      3.8      1.9      0.4
+## [46,]      4.8      3.0      1.4      0.3
+## [47,]      5.1      3.8      1.6      0.2
+## [48,]      4.6      3.2      1.4      0.2
+## [49,]      5.3      3.7      1.5      0.2
+## [50,]      5.0      3.3      1.4      0.2
+## 
+## , , Versicolor
+## 
+##       Sepal L. Sepal W. Petal L. Petal W.
+##  [1,]      7.0      3.2      4.7      1.4
+##  [2,]      6.4      3.2      4.5      1.5
+##  [3,]      6.9      3.1      4.9      1.5
+##  [4,]      5.5      2.3      4.0      1.3
+##  [5,]      6.5      2.8      4.6      1.5
+##  [6,]      5.7      2.8      4.5      1.3
+##  [7,]      6.3      3.3      4.7      1.6
+##  [8,]      4.9      2.4      3.3      1.0
+##  [9,]      6.6      2.9      4.6      1.3
+## [10,]      5.2      2.7      3.9      1.4
+## [11,]      5.0      2.0      3.5      1.0
+## [12,]      5.9      3.0      4.2      1.5
+## [13,]      6.0      2.2      4.0      1.0
+## [14,]      6.1      2.9      4.7      1.4
+## [15,]      5.6      2.9      3.6      1.3
+## [16,]      6.7      3.1      4.4      1.4
+## [17,]      5.6      3.0      4.5      1.5
+## [18,]      5.8      2.7      4.1      1.0
+## [19,]      6.2      2.2      4.5      1.5
+## [20,]      5.6      2.5      3.9      1.1
+## [21,]      5.9      3.2      4.8      1.8
+## [22,]      6.1      2.8      4.0      1.3
+## [23,]      6.3      2.5      4.9      1.5
+## [24,]      6.1      2.8      4.7      1.2
+## [25,]      6.4      2.9      4.3      1.3
+## [26,]      6.6      3.0      4.4      1.4
+## [27,]      6.8      2.8      4.8      1.4
+## [28,]      6.7      3.0      5.0      1.7
+## [29,]      6.0      2.9      4.5      1.5
+## [30,]      5.7      2.6      3.5      1.0
+## [31,]      5.5      2.4      3.8      1.1
+## [32,]      5.5      2.4      3.7      1.0
+## [33,]      5.8      2.7      3.9      1.2
+## [34,]      6.0      2.7      5.1      1.6
+## [35,]      5.4      3.0      4.5      1.5
+## [36,]      6.0      3.4      4.5      1.6
+## [37,]      6.7      3.1      4.7      1.5
+## [38,]      6.3      2.3      4.4      1.3
+## [39,]      5.6      3.0      4.1      1.3
+## [40,]      5.5      2.5      4.0      1.3
+## [41,]      5.5      2.6      4.4      1.2
+## [42,]      6.1      3.0      4.6      1.4
+## [43,]      5.8      2.6      4.0      1.2
+## [44,]      5.0      2.3      3.3      1.0
+## [45,]      5.6      2.7      4.2      1.3
+## [46,]      5.7      3.0      4.2      1.2
+## [47,]      5.7      2.9      4.2      1.3
+## [48,]      6.2      2.9      4.3      1.3
+## [49,]      5.1      2.5      3.0      1.1
+## [50,]      5.7      2.8      4.1      1.3
+## 
+## , , Virginica
+## 
+##       Sepal L. Sepal W. Petal L. Petal W.
+##  [1,]      6.3      3.3      6.0      2.5
+##  [2,]      5.8      2.7      5.1      1.9
+##  [3,]      7.1      3.0      5.9      2.1
+##  [4,]      6.3      2.9      5.6      1.8
+##  [5,]      6.5      3.0      5.8      2.2
+##  [6,]      7.6      3.0      6.6      2.1
+##  [7,]      4.9      2.5      4.5      1.7
+##  [8,]      7.3      2.9      6.3      1.8
+##  [9,]      6.7      2.5      5.8      1.8
+## [10,]      7.2      3.6      6.1      2.5
+## [11,]      6.5      3.2      5.1      2.0
+## [12,]      6.4      2.7      5.3      1.9
+## [13,]      6.8      3.0      5.5      2.1
+## [14,]      5.7      2.5      5.0      2.0
+## [15,]      5.8      2.8      5.1      2.4
+## [16,]      6.4      3.2      5.3      2.3
+## [17,]      6.5      3.0      5.5      1.8
+## [18,]      7.7      3.8      6.7      2.2
+## [19,]      7.7      2.6      6.9      2.3
+## [20,]      6.0      2.2      5.0      1.5
+## [21,]      6.9      3.2      5.7      2.3
+## [22,]      5.6      2.8      4.9      2.0
+## [23,]      7.7      2.8      6.7      2.0
+## [24,]      6.3      2.7      4.9      1.8
+## [25,]      6.7      3.3      5.7      2.1
+## [26,]      7.2      3.2      6.0      1.8
+## [27,]      6.2      2.8      4.8      1.8
+## [28,]      6.1      3.0      4.9      1.8
+## [29,]      6.4      2.8      5.6      2.1
+## [30,]      7.2      3.0      5.8      1.6
+## [31,]      7.4      2.8      6.1      1.9
+## [32,]      7.9      3.8      6.4      2.0
+## [33,]      6.4      2.8      5.6      2.2
+## [34,]      6.3      2.8      5.1      1.5
+## [35,]      6.1      2.6      5.6      1.4
+## [36,]      7.7      3.0      6.1      2.3
+## [37,]      6.3      3.4      5.6      2.4
+## [38,]      6.4      3.1      5.5      1.8
+## [39,]      6.0      3.0      4.8      1.8
+## [40,]      6.9      3.1      5.4      2.1
+## [41,]      6.7      3.1      5.6      2.4
+## [42,]      6.9      3.1      5.1      2.3
+## [43,]      5.8      2.7      5.1      1.9
+## [44,]      6.8      3.2      5.9      2.3
+## [45,]      6.7      3.3      5.7      2.5
+## [46,]      6.7      3.0      5.2      2.3
+## [47,]      6.3      2.5      5.0      1.9
+## [48,]      6.5      3.0      5.2      2.0
+## [49,]      6.2      3.4      5.4      2.3
+## [50,]      5.9      3.0      5.1      1.8</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(iris3[,,<span class="dv">1</span>])</span></code></pre></div>
+<pre><code>##      Sepal L. Sepal W. Petal L. Petal W.
+## [1,]      5.1      3.5      1.4      0.2
+## [2,]      4.9      3.0      1.4      0.2
+## [3,]      4.7      3.2      1.3      0.2
+## [4,]      4.6      3.1      1.5      0.2
+## [5,]      5.0      3.6      1.4      0.2
+## [6,]      5.4      3.9      1.7      0.4</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>ir <span class="ot">&lt;-</span> <span class="fu">rbind</span>(iris3[,,<span class="dv">1</span>],iris3[,,<span class="dv">2</span>],iris3[,,<span class="dv">3</span>])</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(ir)</span></code></pre></div>
+<pre><code>##      Sepal L. Sepal W. Petal L. Petal W.
+## [1,]      5.1      3.5      1.4      0.2
+## [2,]      4.9      3.0      1.4      0.2
+## [3,]      4.7      3.2      1.3      0.2
+## [4,]      4.6      3.1      1.5      0.2
+## [5,]      5.0      3.6      1.4      0.2
+## [6,]      5.4      3.9      1.7      0.4</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(ir)</span></code></pre></div>
+<pre><code>##        Sepal L. Sepal W. Petal L. Petal W.
+## [145,]      6.7      3.3      5.7      2.5
+## [146,]      6.7      3.0      5.2      2.3
+## [147,]      6.3      2.5      5.0      1.9
+## [148,]      6.5      3.0      5.2      2.0
+## [149,]      6.2      3.4      5.4      2.3
+## [150,]      5.9      3.0      5.1      1.8</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>targets <span class="ot">&lt;-</span> <span class="fu">class.ind</span>( <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">&quot;s&quot;</span>, <span class="dv">50</span>), <span class="fu">rep</span>(<span class="st">&quot;c&quot;</span>, <span class="dv">50</span>), <span class="fu">rep</span>(<span class="st">&quot;v&quot;</span>, <span class="dv">50</span>)) )</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(targets)</span></code></pre></div>
+<pre><code>##      c s v
+## [1,] 0 1 0
+## [2,] 0 1 0
+## [3,] 0 1 0
+## [4,] 0 1 0
+## [5,] 0 1 0
+## [6,] 0 1 0</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tail</span>(targets)</span></code></pre></div>
+<pre><code>##        c s v
+## [145,] 0 0 1
+## [146,] 0 0 1
+## [147,] 0 0 1
+## [148,] 0 0 1
+## [149,] 0 0 1
+## [150,] 0 0 1</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>samp <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="dv">25</span>), <span class="fu">sample</span>(<span class="dv">51</span><span class="sc">:</span><span class="dv">100</span>,<span class="dv">25</span>), <span class="fu">sample</span>(<span class="dv">101</span><span class="sc">:</span><span class="dv">150</span>,<span class="dv">25</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>,<span class="dv">25</span>)</span></code></pre></div>
+<pre><code>##  [1]  7 45 18 12  8 42  3 46 20 30  1 15 41 31 32 23  9 48 10 14 43  5 11 44 38</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>ir1 <span class="ot">&lt;-</span> <span class="fu">nnet</span>(ir[samp,], targets[samp,], <span class="at">size =</span> <span class="dv">2</span>, <span class="at">rang =</span> <span class="fl">0.1</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">decay =</span> <span class="fl">5e-4</span>, <span class="at">maxit =</span> <span class="dv">200</span>)</span></code></pre></div>
+<pre><code>## # weights:  19
+## initial  value 54.954495 
+## iter  10 value 41.656171
+## iter  20 value 10.275327
+## iter  30 value 4.284098
+## iter  40 value 2.581139
+## iter  50 value 2.442574
+## iter  60 value 2.335666
+## iter  70 value 2.272707
+## iter  80 value 2.219617
+## iter  90 value 1.939169
+## iter 100 value 1.787570
+## iter 110 value 1.762879
+## iter 120 value 1.757878
+## iter 130 value 1.756086
+## iter 140 value 1.755801
+## iter 150 value 1.755640
+## iter 160 value 1.755590
+## iter 170 value 1.755576
+## iter 180 value 1.755559
+## final  value 1.755557 
+## converged</code></pre>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>ir1 </span></code></pre></div>
+<pre><code>## a 4-2-3 network with 19 weights
+## options were - decay=5e-04</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(ir1)</span></code></pre></div>
+<pre><code>## List of 15
+##  $ n            : num [1:3] 4 2 3
+##  $ nunits       : int 10
+##  $ nconn        : num [1:11] 0 0 0 0 0 0 5 10 13 16 ...
+##  $ conn         : num [1:19] 0 1 2 3 4 0 1 2 3 4 ...
+##  $ nsunits      : int 10
+##  $ decay        : num 5e-04
+##  $ entropy      : logi FALSE
+##  $ softmax      : logi FALSE
+##  $ censored     : logi FALSE
+##  $ value        : num 1.76
+##  $ wts          : num [1:19] 23.061 1.869 0.407 -4.201 -8.676 ...
+##  $ convergence  : int 0
+##  $ fitted.values: num [1:75, 1:3] 0.0206 0.0223 0.0215 0.0209 0.0229 ...
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ : NULL
+##   .. ..$ : chr [1:3] &quot;c&quot; &quot;s&quot; &quot;v&quot;
+##  $ residuals    : num [1:75, 1:3] -0.0206 -0.0223 -0.0215 -0.0209 -0.0229 ...
+##   ..- attr(*, &quot;dimnames&quot;)=List of 2
+##   .. ..$ : NULL
+##   .. ..$ : chr [1:3] &quot;c&quot; &quot;s&quot; &quot;v&quot;
+##  $ call         : language nnet.default(x = ir[samp, ], y = targets[samp, ], size = 2, rang = 0.1,      decay = 5e-04, maxit = 200)
+##  - attr(*, &quot;class&quot;)= chr &quot;nnet&quot;</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>test.cl <span class="ot">&lt;-</span> <span class="cf">function</span>(true, pred) {</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>    true <span class="ot">&lt;-</span> <span class="fu">max.col</span>(true)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>    cres <span class="ot">&lt;-</span> <span class="fu">max.col</span>(pred)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">table</span>(true, cres)</span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">test.cl</span>(targets[<span class="sc">-</span>samp,], <span class="fu">predict</span>(ir1, ir[<span class="sc">-</span>samp,]))</span></code></pre></div>
+<pre><code>##     cres
+## true  1  2  3
+##    1 24  0  1
+##    2  0 25  0
+##    3  2  0 23</code></pre>
+<p>#referensi <a href="https://rpubs.com/fajriyahakim/322155" class="uri">https://rpubs.com/fajriyahakim/322155</a></p>
 </div>
 </div>
     </section>
