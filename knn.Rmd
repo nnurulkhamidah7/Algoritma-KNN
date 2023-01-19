@@ -32,25 +32,16 @@ tahapan algoritma 1. Menyiapkan Dataset
 
 # Eksperimen Algoritma KNN
 ## library
+
+
 ```{r}
 library(caret)
-data(iris)
-head(iris)
+data("cars")
+head(cars)
 ```
 
 ```{r}
-set.seed(300)
-#Spliting data as training and test set. Using createDataPartition() function from caret. p is the percentage of data that goes to training. 
-indxTrain <- createDataPartition(y = iris$Species,p = 0.75,list = FALSE)
-training <- iris[indxTrain,]
-testing <- iris[-indxTrain,]
-
-#Checking distibution in original data and partitioned data
-prop.table(table(training$Species)) * 100
-```
-
-```{r}
-data(iris3)
+data("cars")
 iris3
 ```
 
@@ -65,31 +56,102 @@ head(ir)
 
 ```{r}
 tail(ir)
-``````
+```
+
+```{r eval=FALSE}
+targets <- class.ind( c(rep("s", 50), rep("c", 50), rep("v", 50)) )
+```
+
+```{r eval=FALSE}
+head(targets)
+```
+
+       c s v
+    [1,] 0 1 0
+    [2,] 0 1 0
+    [3,] 0 1 0
+    [4,] 0 1 0
+    [5,] 0 1 0
+    [6,] 0 1 0
+```{r eval=FALSE}
+tail(targets)
+```
+
+       c s v
+    [145,] 0 0 1
+    [146,] 0 0 1
+    [147,] 0 0 1
+    [148,] 0 0 1
+    [149,] 0 0 1
+    [150,] 0 0 1
+```{r}
+samp <- c(sample(1:50,25), sample(51:100,25), sample(101:150,25))
+```
 
 ```{r}
 sample(1:50,25)
 ```
 
+    [1]  6 33 42 14  1 29 43 10 26 19 25 11 31 18  4 39 37 28  2  9 47 38 24
+        [24] 13  7
 ```{r eval=FALSE}
 ir1 <- nnet(ir[samp,], targets[samp,], size = 2, rang = 0.1,
             decay = 5e-4, maxit = 200)
 ```
+# weights:  19
 
+     initial  value 56.183042 
+     iter  10 value 47.182267
+     iter  20 value 24.580584
+     iter  30 value 2.639642
+     iter  40 value 1.011347
+     iter  50 value 0.728556
+     iter  60 value 0.622337
+     iter  70 value 0.581634
+     iter  80 value 0.557331
+     iter  90 value 0.539467
+     iter 100 value 0.537607
+     iter 110 value 0.536698
+     iter 120 value 0.536517
+     iter 130 value 0.536346
+     iter 140 value 0.536235
+     iter 150 value 0.536209
+     iter 160 value 0.536202
+     iter 170 value 0.536197
+     final  value 0.536196 
+     converged
 ```{r eval=FALSE}
 ir1 
-
 ```
-
- a 4-2-3 network with 19 weights
-options were - decay=5e-04
-
-
-
+      a 4-2-3 network with 19 weights
+      options were - decay=5e-04
 ```{r eval=FALSE}
 str(ir1)
 ```
-
+ 
+                   List of 15
+     $ n            : num [1:3] 4 2 3
+     $ nunits       : int 10
+     $ nconn        : num [1:11] 0 0 0 0 0 0 5 10 13 16 ...
+     $ conn         : num [1:19] 0 1 2 3 4 0 1 2 3 4 ...
+     $ nsunits      : int 10
+     $ decay        : num 5e-04
+     $ entropy      : logi FALSE
+     $ softmax      : logi FALSE
+     $ censored     : logi FALSE
+     $ value        : num 2.34
+     $ wts          : num [1:19] -0.402 -0.654 -2.007 3.178 1.574 ...
+     $ convergence  : int 1
+     $ fitted.values: num [1:75, 1:3] 0.0219 0.0214 0.022 0.0241 0.0224 ...
+     ..- attr(*, "dimnames")=List of 2
+     .. ..$ : NULL
+     .. ..$ : chr [1:3] "c" "s" "v"
+     $ residuals    : num [1:75, 1:3] -0.0219 -0.0214 -0.022 -0.0241 -0.0224        ...
+     ..- attr(*, "dimnames")=List of 2
+     .. ..$ : NULL
+     .. ..$ : chr [1:3] "c" "s" "v"
+     $ call         : language nnet.default(x = ir[samp, ], y = targets[samp, ], size = 2, rang = 0.1,      decay = 5e-04, maxit = 200)
+     - attr(*, "class")= chr "nnet"
 ```{r}
 test.cl <- function(true, pred) {
     true <- max.col(true)
@@ -102,26 +164,18 @@ test.cl <- function(true, pred) {
 test.cl(targets[-samp,], predict(ir1, ir[-samp,]))
 ```
 
-        cres
-    true  1  2  3
-      1 24  0  1
-      2  0 25  0
-      3  1  0 24
-
-```{r}
-set.seed(400)
-ctrl <- trainControl(method="repeatedcv",repeats = 3) #,classProbs=TRUE,summaryFunction = twoClassSummary)
-knnFit <- train(Species ~ ., data = training, method = "knn", trControl = ctrl, preProcess = c("center","scale"), tuneLength = 20)
-#Output of kNN fit
-knnFit
-```
-
-```{r}
+         cres
+     true  1  2  3
+     1 24  0  1
+     2  0 25  0
+     3  4  0 21
+```{r eval=FALSE}
 #Plotting yields Number of Neighbours Vs accuracy (based on repeated cross validation)
 plot(knnFit)
 ```
 
+![](https://cdn.mathpix.com/snip/images/7H_NXrdq94AQ9ixDVNgRdEGzwv4vLCvOzB7sQudIHZ4.original.fullsize.png)
 
-
-#referensi
+##referensi
 https://rpubs.com/fajriyahakim/322155
+
