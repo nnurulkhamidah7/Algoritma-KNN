@@ -33,9 +33,20 @@ tahapan algoritma 1. Menyiapkan Dataset
 # Eksperimen Algoritma KNN
 ## library
 ```{r}
-library(nnet)
+library(caret)
 data(iris)
 head(iris)
+```
+
+```{r}
+set.seed(300)
+#Spliting data as training and test set. Using createDataPartition() function from caret. p is the percentage of data that goes to training. 
+indxTrain <- createDataPartition(y = iris$Species,p = 0.75,list = FALSE)
+training <- iris[indxTrain,]
+testing <- iris[-indxTrain,]
+
+#Checking distibution in original data and partitioned data
+prop.table(table(training$Species)) * 100
 ```
 
 ```{r}
@@ -54,39 +65,28 @@ head(ir)
 
 ```{r}
 tail(ir)
-```
-
-```{r}
-targets <- class.ind( c(rep("s", 50), rep("c", 50), rep("v", 50)) )
-```
-
-```{r}
-head(targets)
-```
-
-```{r}
-tail(targets)
-```
-
-```{r}
-samp <- c(sample(1:50,25), sample(51:100,25), sample(101:150,25))
-```
+``````
 
 ```{r}
 sample(1:50,25)
 ```
 
-```{r}
+```{r eval=FALSE}
 ir1 <- nnet(ir[samp,], targets[samp,], size = 2, rang = 0.1,
             decay = 5e-4, maxit = 200)
 ```
 
-```{r}
+```{r eval=FALSE}
 ir1 
 
 ```
 
-```{r}
+ a 4-2-3 network with 19 weights
+options were - decay=5e-04
+
+
+
+```{r eval=FALSE}
 str(ir1)
 ```
 
@@ -98,8 +98,27 @@ test.cl <- function(true, pred) {
 }
 ```
 
-```{r}
+```{r eval=FALSE}
 test.cl(targets[-samp,], predict(ir1, ir[-samp,]))
+```
+
+        cres
+    true  1  2  3
+      1 24  0  1
+      2  0 25  0
+      3  1  0 24
+
+```{r}
+set.seed(400)
+ctrl <- trainControl(method="repeatedcv",repeats = 3) #,classProbs=TRUE,summaryFunction = twoClassSummary)
+knnFit <- train(Species ~ ., data = training, method = "knn", trControl = ctrl, preProcess = c("center","scale"), tuneLength = 20)
+#Output of kNN fit
+knnFit
+```
+
+```{r}
+#Plotting yields Number of Neighbours Vs accuracy (based on repeated cross validation)
+plot(knnFit)
 ```
 
 
